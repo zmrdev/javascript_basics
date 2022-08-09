@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Fetch Todos</h1>
+    <table>
+        <tr>
+            <th>User Id</th>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Completed</th>
+        </tr>
+        <tbody id="result">
+
+        </tbody>
+    </table>
+</body>
+<script>
+    // var req=new XMLHttpRequest()
+    // req.open("get","https://jsonplaceholder.typicode.com/todos")
+    // req.send()
+    // req.onreadystatechange=()=>{
+    //     if(req.readyState==4){
+    //         if(req.status>199 && req.status<300){
+    //             let todos=JSON.parse(req.responseText)
+    //             populateValues(todos)
+    //         }
+    //         else{
+    //             console.log("failed to fetch data");
+    //         }
+    //     }
+    // }
+
+    fetch("https://jsonplaceholder.typicode.com/todos").then(res => res.json())
+    .then(data => populateValues(data))
+
+    function populateValues(todos) {
+        let html_data = ``
+        for (let todo of todos) {
+            html_data += `<tr>
+            <td>${todo.userId}</td>
+            <td>${todo.id}</td>
+            <td>${todo.title}</td>
+            <td>${todo.completed}</td></tr>`
+        }
+        document.querySelector("#result").innerHTML = html_data
+    }
+</script>
+
+</html>

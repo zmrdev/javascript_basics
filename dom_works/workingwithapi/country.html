@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4">
+                <input type="text" id="c_name" placeholder="enter country">
+                <button class="btn btn-success" onclick="fetchData()">FetchData</button>
+            </div>
+            <div class="col-4"></div>
+        </div>
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6" id="result">
+
+            </div>
+            <div class="col-3"></div>
+        </div>
+    </div>
+</body>
+<script>
+    function fetchData(){
+        let countryName=c_name.value
+        fetch(`https://restcountries.com/v2/name/${countryName}?fullText=true`).
+        then(res=>res.json()).
+        then(data=>populateValues(data))
+    }
+    function populateValues(data){
+        let countryName=data[0].name
+        let population=data[0].population
+        let capital=data[0].capital
+        let currencyName=data[0].currencies[0].name
+        let currencySymbol=data[0].currencies[0].symbol
+        let flag=data[0].flag
+        let language=data[0].languages[0].name
+        let html_data=`<div class="card" style="width: 100%;">
+  <img src="${flag}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">country Name: ${countryName}</h5>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">population: ${population}</li>
+    <li class="list-group-item">capital :${capital}</li>
+    <li class="list-group-item">currency Name :${currencyName}</li>
+    <li class="list-group-item">currency Symbol :${currencySymbol}</li>
+    <li class="list-group-item">language :${language}</li>
+
+
+  </ul>
+  <div class="card-body">
+    <a href="#" class="card-link">Card link</a>
+    <a href="#" class="card-link">Another link</a>
+  </div>
+</div>`
+document.querySelector("#result").innerHTML=html_data
+    }
+
+</script>
+</html>
